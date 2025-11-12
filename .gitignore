@@ -17,6 +17,10 @@ x86/
 *.config
 *.dbmdl
 
+# Visual Studio temporary folder
+.vs/
+
+
 # User-specific files
 *.user
 *.rsuser
