@@ -1,15 +1,23 @@
+using GoVisit_Project.DAL;
+using GoVisit_Project.DAL.Interfaces;
+using GoVisit_Project.BusinessLogic;
+using GoVisit_Project.BusinessLogic.Interfaces;
+using GoVisit_Project.Process.Handlers;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Register layers with DI
+builder.Services.AddSingleton<MongoContext>();
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<AppointmentHandlers>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -17,9 +25,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
+//app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
